@@ -7,18 +7,25 @@ def pin_to_ipfs(data):
     # Convert dictionary to JSON string
     json_data = json.dumps(data)
     
-    # Define the IPFS API endpoint for adding data
-    ipfs_add_url = "https://ipfs.infura.io:5001/api/v0/add"
+    # Define the Pinata API endpoint for adding data
+    pinata_add_url = "https://api.pinata.cloud/pinning/pinJSONToIPFS"
     
-    # Send the data to IPFS
-    response = requests.post(ipfs_add_url, files={"file": json_data})
+    # Define the headers with your Pinata API key and secret
+    headers = {
+        "Content-Type": "application/json",
+        "pinata_api_key": "14d1fb98dc31bbddfc7f",
+        "pinata_secret_api_key": "5c6e2d40ff55115e2a16b8823b953c62404867383be34454a1921911f7584b3c"
+    }
+    
+    # Send the data to Pinata
+    response = requests.post(pinata_add_url, headers=headers, data=json_data)
     
     # Check if the request was successful
     if response.status_code == 200:
         # Extract the CID from the response
-        cid = response.json()["Hash"]
+        cid = response.json()["IpfsHash"]
     else:
-        raise Exception(f"Failed to pin data to IPFS: {response.text}")
+        raise Exception(f"Failed to pin data to Pinata: {response.text}")
     
     return cid
 
