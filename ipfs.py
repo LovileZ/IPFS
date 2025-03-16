@@ -8,7 +8,7 @@ def pin_to_ipfs(data):
     json_data = json.dumps(data)
     
     # Define the IPFS API endpoint for adding data
-    ipfs_add_url = "orange-objective-tarsier-545.mypinata.cloud"
+    ipfs_add_url = "https://ipfs.infura.io:5001/api/v0/add"
     
     # Send the data to IPFS
     response = requests.post(ipfs_add_url, files={"file": json_data})
